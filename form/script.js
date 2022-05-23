@@ -12,16 +12,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var stringCheck = new RegExp('^[a-zA-Z]+$');
     var stringWithNumbers = new RegExp('^[a-zA-Z0-9]+$');
     var onlyNumbers = new RegExp('^[0-9]+$');
-    var flatNumberFormat = new RegExp('^[0-9]');
-    //attaching event handlers
-    nameInput.addEventListener('focusout', function() {
+    var stringStartsWithNumbers = new RegExp('^[0-9]');
+    var stringContainsOnlyNumbersAndDashes = new RegExp('^[0-9-]+$')
+        //attaching event handlers
+    nameInput.addEventListener('change', function() {
         if (nameInput.value && nameInput.value.length >= 4 && stringCheck.test(nameInput.value)) {
             hideValidation(nameInput);
         } else {
             showValidation(nameInput);
         }
     });
-    surnameInput.addEventListener('focusout', function() {
+    surnameInput.addEventListener('change', function() {
         if (surnameInput.value && surnameInput.value.length >= 5 && stringCheck.test(surnameInput.value)) {
             hideValidation(surnameInput);
         } else {
@@ -39,22 +40,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
             showValidation(deliveryDateInput);
         }
     });
-    streetInput.addEventListener('focusout', function() {
+    streetInput.addEventListener('change', function() {
         if (streetInput.value && streetInput.value.length >= 5 && stringWithNumbers.test(streetInput.value)) {
             hideValidation(streetInput);
         } else {
             showValidation(streetInput);
         }
     });
-    houseNumberInput.addEventListener('focusout', function() {
+    houseNumberInput.addEventListener('change', function() {
         if (houseNumberInput.value && onlyNumbers.test(houseNumberInput.value)) {
             hideValidation(houseNumberInput);
         } else {
             showValidation(houseNumberInput);
         }
     });
-    flatInput.addEventListener('focusout', function() {
-        if (flatInput.value && flatNumberFormat.test(flatInput.value)) {
+    flatInput.addEventListener('change', function() {
+        if (flatInput.value && stringStartsWithNumbers.test(flatInput.value) &&
+            stringContainsOnlyNumbersAndDashes.test(flatInput.value)) {
             hideValidation(flatInput);
         } else {
             showValidation(flatInput);
