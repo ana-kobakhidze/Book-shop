@@ -1,5 +1,5 @@
 const bookData = [];
-const bag = {
+let bag = {
     items: [],
     totalCount: 0,
     totalPrice: 0
@@ -73,63 +73,10 @@ fetch('https://raw.githubusercontent.com/rolling-scopes-school/js-fe-course-en/m
             // adding 'add to bag' button
             const addBook = document.createElement('a');
             const addBookTxt = document.createTextNode("add to bag");
-
             addBook.addEventListener('click', function() {
                 addBookToBag(extendedBookObj);
-                console.log(bag);
-                // adding modal
-                const modal = document.createElement("div");
-                modal.classList.add("modal");
-                modal.addEventListener('drop', function(event) {
-                    drop(event)
-                })
-                modal.addEventListener('dragover', function(event) {
-                        allowDrop(event);
-                    })
-                    // adding close button
-                const closeButton = document.createElement('button');
-                const closeButtonTxt = document.createTextNode("X");
-                closeButton.addEventListener('click', function() {
-                    modal.style.display = "none";
-                })
-                closeButton.appendChild(closeButtonTxt);
-                modal.appendChild(closeButton);
-                const elements = document.querySelector('.modalListWrapper');
-
-                elements !== null && elements.remove();
-                // creating modalList
-                bag.items.forEach(elem => {
-                    const modalListWrapper = document.createElement("div");
-                    modalListWrapper.classList.add('modalListWrapper');
-                    // selected book title
-                    const bookTitle = document.createElement('h5');
-                    const bookTitleTxt = document.createTextNode(elem.title);
-                    bookTitle.appendChild(bookTitleTxt);
-                    //selected book author
-                    const bookAuthor = document.createElement("h6");
-                    const bookAuthorTxt = document.createTextNode(elem.author);
-                    bookAuthor.appendChild(bookAuthorTxt);
-                    //selected book price
-                    const bookPrice = document.createElement('h4');
-                    const bookPriceTxt = document.createTextNode(elem.price);
-                    bookPrice.appendChild(bookPriceTxt);
-                    //remove Button
-                    const removeButton = document.createElement("button");
-                    const removeButtonTxt = document.createTextNode("X");
-                    removeButton.addEventListener('click', function() {
-                        removeBookFromBag(elem.id);
-                    });
-                    removeButton.appendChild(removeButtonTxt);
-                    //adding elements to wrapper
-                    modalListWrapper.appendChild(bookTitle);
-                    modalListWrapper.appendChild(bookAuthor);
-                    modalListWrapper.appendChild(bookPrice);
-                    modalListWrapper.appendChild(removeButton);
-                    modal.appendChild(modalListWrapper);
-                });
-                console.log(modal)
-                dFrag.appendChild(modal);
-
+                const showModal = document.querySelector('.bagContainer')
+                showModal.style.display = "block";
             });
             addBook.appendChild(addBookTxt);
             addBook.classList.add('add');
@@ -157,6 +104,9 @@ if (document.body != null) {
 }
 
 const addBookToBag = book => {
+    if (bag.items.length === 0) {
+
+    }
     const bookIndexInBag = bag.items.findIndex(b => b.id === book.id);
     if (bookIndexInBag === -1) {
         bag.items.push({...book, count: 1 });
@@ -165,65 +115,135 @@ const addBookToBag = book => {
     }
     bag.totalPrice += book.price;
     bag.totalCount++;
+    createBagItem(book);
+    const totalPrice = document.querySelector('.total');
+    totalPrice.innerHTML = "Total:" + " $ " + bag.totalPrice;
+
 }
 
 const removeBookFromBag = bookId => {
     const bookIndexInBag = bag.items.findIndex(b => b.id === bookId);
-    if (bookIndexInBag > 0) {
-        const bookToRemove = bag[bookIndexInBag];
+    if (bookIndexInBag > -1) {
+        const bookToRemove = bag.items[bookIndexInBag];
         bag.totalPrice -= bookToRemove.count * bookToRemove.price;
-        bag.items.pop(b => b.id === bookId);
+        bag.items.splice(bookIndexInBag, 1);
         bag.totalCount--;
+        const bagItemId = 'bagItem' + bookId;
+        removeBagItemFromDom(bagItemId);
+        const totalPrice = document.querySelector('.total');
+        totalPrice.innerHTML = "Total:" + " $ " + bag.totalPrice;
+
     }
 }
 
 const drag = (event) => {
-    event.dataTransfer.setData("text", event.target.id);
+    event.dataTransfer.setData("text", event.currentTarget.id);
 }
 const drop = ev => {
+    //getting data from drop
     ev.preventDefault();
     let data = ev.dataTransfer.getData("text");
-    console.log(bookData)
-    console.log(data)
+    // finding product in data obj with id 
     let product = bookData.findIndex(elem => elem.id == data);
+    // adding product  to bag 
     addBookToBag(bookData[product]);
-    console.log(bag);
-    const modalElements = document.querySelector('.modalListWrapper');
-    modalElements.remove();
-    bag.items.forEach(elem => {
-        const modalListWrapper = document.createElement("div");
-        modalListWrapper.classList.add('modalListWrapper');
-        // selected book title
-        const bookTitle = document.createElement('h5');
-        const bookTitleTxt = document.createTextNode(elem.title);
-        bookTitle.appendChild(bookTitleTxt);
-        //selected book author
-        const bookAuthor = document.createElement("h6");
-        const bookAuthorTxt = document.createTextNode(elem.author);
-        bookAuthor.appendChild(bookAuthorTxt);
-        //selected book price
-        const bookPrice = document.createElement('h4');
-        const bookPriceTxt = document.createTextNode(elem.price);
-        bookPrice.appendChild(bookPriceTxt);
-        //remove Button
-        const removeButton = document.createElement("button");
-        const removeButtonTxt = document.createTextNode("X");
-        removeButton.addEventListener('click', function() {
-            removeBookFromBag(elem.id);
-        });
-        removeButton.appendChild(removeButtonTxt);
-        //adding elements to wrapper
-        modalListWrapper.appendChild(bookTitle);
-        modalListWrapper.appendChild(bookAuthor);
-        modalListWrapper.appendChild(bookPrice);
-        modalListWrapper.appendChild(removeButton);
-        const modalElement = document.querySelector('.modal');
-        console.log(modalElement)
-        modalElement.appendChild(modalListWrapper);
-    });
-
-    console.log(data)
 }
+
 const allowDrop = event => {
     event.preventDefault();
+}
+
+const createBagContainer = () => {
+    // adding modal
+    const bagContainer = document.createElement("div");
+    bagContainer.classList.add("bagContainer");
+    bagContainer.addEventListener('drop', function(event) {
+        drop(event)
+    });
+    bagContainer.addEventListener('dragover', function(event) {
+        allowDrop(event);
+    });
+    //adding title
+    const bagTitle = document.createElement("h4");
+    const bagTitleTxt = document.createTextNode("Order books");
+    bagTitle.append(bagTitleTxt);
+    // adding close button
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('closeButton');
+
+    const closeButtonTxt = document.createTextNode("X");
+    closeButton.addEventListener('click', function() {
+        bagContainer.style.display = "none";
+    });
+    closeButton.appendChild(closeButtonTxt);
+    // adding total
+    const total = document.createElement("h2");
+    total.classList.add('total');
+    // adding confirm
+    const confirmButton = document.createElement('a');
+    confirmButton.classList.add('confirm')
+    const confirmTxt = document.createTextNode("confirm order");
+    confirmButton.appendChild(confirmTxt);
+
+    bagContainer.appendChild(closeButton);
+    bagContainer.appendChild(bagTitle);
+    bagContainer.appendChild(total);
+    bagContainer.appendChild(confirmButton);
+
+    dFrag.appendChild(bagContainer);
+    return bagContainer;
+}
+
+
+const createBagItem = (book) => {
+    let parentDiv = document.querySelector('.bagContainer');
+    if (parentDiv === null) {
+        parentDiv = createBagContainer();
+    }
+    const bagItemId = 'bagItem' + book.id;
+    //check if dom element already exists and remove
+    removeBagItemFromDom(bagItemId);
+    //creating bag item
+    const bagItem = document.createElement("div");
+    bagItem.id = bagItemId;
+    bagItem.classList.add('bagItem');
+    // selected book title
+    const bookTitle = document.createElement('h5');
+    const bookTitleTxt = document.createTextNode(book.title);
+    bookTitle.appendChild(bookTitleTxt);
+    //selected book author
+    const bookAuthor = document.createElement("h6");
+    const bookAuthorTxt = document.createTextNode(book.author);
+    bookAuthor.appendChild(bookAuthorTxt);
+    //selected book price
+    const bookPrice = document.createElement('h3');
+    const bookPriceTxt = document.createTextNode("$ " + book.price);
+    bookPrice.appendChild(bookPriceTxt);
+    //remove Button
+    const removeButton = document.createElement("button");
+    removeButton.classList.add('removeButton')
+    const removeButtonTxt = document.createTextNode("X");
+    removeButton.addEventListener('click', function() {
+        removeBookFromBag(book.id);
+    });
+    removeButton.appendChild(removeButtonTxt);
+
+    //adding elements to wrapper
+    bagItem.appendChild(bookTitle);
+    bagItem.appendChild(bookAuthor);
+    bagItem.appendChild(bookPrice);
+    bagItem.appendChild(removeButton);
+
+
+    parentDiv.appendChild(bagItem);
+
+
+}
+const removeBagItemFromDom = (id) => {
+    const documentElById = document.getElementById(id);
+    documentElById && documentElById.remove();
+}
+
+function insertAfter(newNode, existingNode) {
+    existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
