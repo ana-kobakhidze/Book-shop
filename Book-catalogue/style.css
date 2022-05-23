@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;800&display=swap');
+body {
+    background-color: #2d2e2e;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    display: flex;
+    width: 1326px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    position: relative;
+    top: 140px;
+    row-gap: 64px;
+}
+
+.wrapper div {
+    position: relative;
+    left: 60px;
+}
+
+img {
+    width: 200px;
+    border: 2px solid #FFFFFF;
+    border-radius: 30px;
+}
+
+ul {
+    padding: 0;
+    width: 330px;
+}
+
+li {
+    list-style-type: none;
+    width: 250px;
+}
+
+.title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    height: 70px;
+    color: #f0f0f0;
+    margin: 0;
+}
+
+li h6 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    height: 36px;
+    color: #8a8787;
+    margin: 10px 0;
+}
+
+.price {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: #f0f0f0;
+    margin: 0;
+}
+
+.descripLink {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    color: #8a8787;
+    position: relative;
+    right: 16px;
+    top: 10px;
+    padding: 10px 10px 10px 0;
+}
+
+.descripLink:hover {
+    cursor: pointer;
+    color: #f0f0f0;
+}
+
+.arrow {
+    width: 15px;
+    border: none;
+    position: relative;
+    left: 109px;
+    top: 3px;
+}
+
+.arrow:hover {
+    transform: scaleY(-1);
+    cursor: pointer;
+}
+
+li p {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #8a8787;
+    padding: 10px 10px 10px 0;
+}
+
+.add {
+    padding: 5px 74px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    color: #f0f0f0;
+    border: 2px solid #f0f0f0;
+    display: block;
+    margin-top: 30px;
+}
+
+.add:hover {
+    background-color: #f0f0f0;
+    color: #2d2e2e;
+    cursor: pointer;
+}
+
+.modal {
+    display: block;
+}
