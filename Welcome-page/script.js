@@ -14,7 +14,7 @@ graphic.src = "./assets/graphic.png";
 // adding button
 const startButton = document.createElement("a");
 const startButtonTxt = document.createTextNode("Shop now");
-startButton.href = "file:///Users/ana/Book-shop/Book-shop/Book-catalogue/index.html"
+startButton.href = "https://ana-kobakhidze.github.io/Book-shop/Book-catalogue/index.html"
 startButton.appendChild(startButtonTxt);
 
 wrapper.appendChild(paragraph);

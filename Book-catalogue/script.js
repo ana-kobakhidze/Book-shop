@@ -183,7 +183,7 @@ const createBagContainer = () => {
     // adding confirm
     const confirmButton = document.createElement('a');
     confirmButton.classList.add('confirm')
-    confirmButton.href = "file:///Users/ana/Book-shop/Book-shop/form/index.html";
+    confirmButton.href = "https://ana-kobakhidze.github.io/Book-shop/form/index.html";
     const confirmTxt = document.createTextNode("confirm order");
     confirmButton.appendChild(confirmTxt);
 
