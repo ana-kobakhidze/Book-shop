@@ -57,7 +57,7 @@ fetch('https://raw.githubusercontent.com/rolling-scopes-school/js-fe-course-en/m
             descripLink.appendChild(descripLinkTxt);
             descripLink.classList.add('descripLink')
             descripLink.addEventListener('click', function() {
-                const shopItem = document.getElementById('shop-item' + index);
+                const shopItem = document.getElementById(index);
                 console.log(index);
                 if (!shopItem) {
                     return;
