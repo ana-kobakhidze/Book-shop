@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <script src="./script.js"></script>
+</head>
+
+<body>
+    <div id="formWrapper">
+        <form id='form' autocomplete="off" action="file:///Users/ana/Book-shop/Book-shop/confirm-page/index.html">
+            <!-- name -->
+            <input type="text" id="name" name="name" value="" placeholder="name.." isValid='false' required>
+            <p class="warning" id="nameWarning">* The field is invalid</p>
+            <!-- Surname -->
+            <input type="text" id="surname" name="surname" value="" placeholder="surname.. " isValid='false' required>
+            <p class="warning" id="surnameWarning">* The field is invalid</p>
+            <!-- Delivery date -->
+            <input type="date" id="delivery" value="" name="delivery" isValid='false' required>
+            <p class="warning" id="deliveryWarning">* The field is invalid</p>
+
+            <!-- Street -->
+            <input type="text" id="street" name="street" value="" placeholder="street address..." isValid='false' required>
+            <p class="warning" id="streetWarning">* The field is invalid</p>
+
+            <!-- House number -->
+            <input type="text" id="houseNum" name="houseNum" placeholder="house number..." isValid='false' required>
+            <p class="warning" id="houseNumWarning">* The field is invalid</p>
+
+            <!-- Flat number -->
+            <input type="text" id="flatNum" name="flatNum" placeholder="flat number..." isValid='false' required>
+            <p class="warning" id="flatNumWarning">* The field is invalid</p>
+
+            <!-- payment type -->
+            <p id="paymentTitle">select payment type:</p>
+            <span class="inlines">
+            <input type="radio" id="cash" name="payment" value="cash" checked>
+            <label for="cash">cash</label>
+        </span>
+            <span class="inlines">
+            <input type="radio" id="card" name="payment" value="card">
+            <label for="card">card</label>
+        </span>
+            <!--  gifts -->
+            <p id="giftTitle">Choose two gifts</p>
+            <div id="checkbox">
+                <span class="inlineCheks">
+                
+            <input type="checkbox" id="pack" name="pack" value="pack">
+            <label for="pack">pack as a gift</label>
+        </span>
+                <span class="inlineCheks">
+            <input type="checkbox" id="postcard" name="postcard" value="postcard">
+            <label for="postcard">add postcard</label>
+        </span>
+                <span class="inlineCheks">
+            <input type="checkbox" id="discount" name="discount" value="discount">
+            <label for="discount">provide 2% discount to the next time</label>
+        </span>
+                <span class="inlineCheks">
+            <input type="checkbox" id="branded" name="branded" value="branded">
+            <label for="branded">branded pen or pencil</label>
+        </span>
+            </div>
+            <!-- Submit -->
+            <input id="submit" type="submit" value="Submit" disabled>
+        </form>
+    </div>
+</body>
+
+</html>
