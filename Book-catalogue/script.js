@@ -4,6 +4,7 @@ let bag = {
     totalCount: 0,
     totalPrice: 0
 };
+const dFragment = document.createDocumentFragment();
 const dFrag = document.createElement('div');
 dFrag.classList.add('main')
 const shopItems = document.createElement('div');
@@ -182,12 +183,16 @@ const createBagContainer = () => {
     // adding confirm
     const confirmButton = document.createElement('a');
     confirmButton.classList.add('confirm')
+    confirmButton.href = "https://ana-kobakhidze.github.io/Book-shop/form/index.html";
     const confirmTxt = document.createTextNode("confirm order");
     confirmButton.appendChild(confirmTxt);
+
 
     bagContainer.appendChild(closeButton);
     bagContainer.appendChild(bagTitle);
     bagContainer.appendChild(total);
+
+
     bagContainer.appendChild(confirmButton);
 
     dFrag.appendChild(bagContainer);
@@ -247,3 +252,5 @@ const removeBagItemFromDom = (id) => {
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
+dFragment.appendChild(dFrag);
+document.body.appendChild(dFragment);
