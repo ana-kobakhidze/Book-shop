@@ -50,10 +50,10 @@ fetch('https://raw.githubusercontent.com/rolling-scopes-school/js-fe-course-en/m
             //adding description button
             const descripLink = document.createElement('a');
             const descripLinkTxt = document.createTextNode('Show more');
-            const arrow = document.createElement('img');
-            arrow.src = './icons/arrow.png';
-            arrow.classList.add('arrow')
-            descripLink.appendChild(arrow);
+            // const arrow = document.createElement('img');
+            // arrow.src = './icons/arrow.png';
+            // arrow.classList.add('arrow')
+            // descripLink.appendChild(arrow);
             descripLink.appendChild(descripLinkTxt);
             descripLink.classList.add('descripLink')
             descripLink.addEventListener('click', function() {
@@ -62,16 +62,11 @@ fetch('https://raw.githubusercontent.com/rolling-scopes-school/js-fe-course-en/m
                 if (!shopItem) {
                     return;
                 }
-                const descriptionElement = shopItem.querySelector('.description');
-                descriptionElement.hidden = !descriptionElement.hidden;
+
+                showDescriptionModal(shopItem);
+
             });
-            //adding description
-            const description = document.createElement('p');
-            description.hidden = true;
-            description.classList.add('description');
-            const descriptionContent = document.createTextNode(elem.description);
-            description.appendChild(descriptionContent);
-            // adding 'add to bag' button
+
             const addBook = document.createElement('a');
             const addBookTxt = document.createTextNode("add to bag");
             addBook.addEventListener('click', function() {
@@ -81,13 +76,13 @@ fetch('https://raw.githubusercontent.com/rolling-scopes-school/js-fe-course-en/m
             });
             addBook.appendChild(addBookTxt);
             addBook.classList.add('add');
-            //displaying book details
+
             li.appendChild(title);
             li.appendChild(author);
             li.appendChild(price);
 
             li.appendChild(descripLink);
-            li.appendChild(description);
+
             li.appendChild(addBook);
 
             //adding rest of the nodes reversed order
@@ -254,3 +249,35 @@ function insertAfter(newNode, existingNode) {
 }
 dFragment.appendChild(dFrag);
 document.body.appendChild(dFragment);
+
+const showDescriptionModal = (shopItemNode) => {
+    const modalId = "myModal" + shopItemNode.id;
+    const modalById = document.getElementById(modalId);
+    if (modalById) {
+        modalById.style.display = 'block';
+    }
+    const modalFrag = document.createDocumentFragment();
+    const modal = document.createElement("div");
+    modal.id = modalId;
+    modal.classList.add('modal');
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content')
+    const closeModal = document.createElement('span');
+    closeModal.classList.add('closeModal');
+    const closeModalTxt = document.createTextNode('X');
+    closeModal.addEventListener('click', function() {
+        modal.style.display = "none";
+    });
+    closeModal.appendChild(closeModalTxt);
+    const modalTxtElem = document.createElement('p');
+    const shopItem = bookData.find(s => s.id === parseInt(shopItemNode.id));
+    const modalTxt = document.createTextNode(shopItem.description);
+    modalTxtElem.appendChild(modalTxt);
+
+    modalContent.appendChild(closeModal);
+    modalContent.appendChild(modalTxtElem);
+    modal.appendChild(modalContent);
+    modalFrag.appendChild(modal);
+    modal.style.display = 'block';
+    document.body.appendChild(modalFrag);
+}
